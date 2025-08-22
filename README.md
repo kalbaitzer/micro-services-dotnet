@@ -1,7 +1,7 @@
 # Microsserviços com .NET e RabbitMQ
 
 ![.NET](https://img.shields.io/badge/.NET-9-blueviolet)
-![SQL Server](https://img.shields.io/badge/SQL Server-2019-blue)
+![SQL Server](https://img.shields.io/badge/SQL-Server-2019-blue)
 ![RabbitMQ 3](https://img.shields.io/badge/RabbitMQ-3-orange)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue)
 ![Arquitetura](https://img.shields.io/badge/Arquitetura-Clean-green)
@@ -32,24 +32,24 @@ Este repositório contém um sistema de exemplo construído com dois microsservi
                                     |
 +----------------------------------------------------------------------------------+
 |                                                                                  |
-|  1. POST /api/contracts                                                          |
-|  V                                                                               |
+|               1. POST /api/contracts                                             |
+|               V                                                                  |
 | [Microserviço de Contratos (.NET Core)] ---> [Banco SQL Server (Contracts)]      |
-|  |                                                                               |
-|  | 2. Publica evento "ContratoCriado"                                            |
-|  V                                                                               |
-| [-------------------------- RabbitMQ --------------------------]                 |
-| |              Exchange: 'contratos_exchange'                  |                 |
-| |                         |                                    |                 |
-| |              Queue: 'posicao_queue'                          |                 |
-| [--------------------------------------------------------------]                 |
-|                                |                                                 |
-|                                | 3. Consome evento                               |
-|                                V                                                 |
+|               |                                                                  |
+|               | 2. Publica evento "ContratoCriado"                               |
+|               V                                                                  |
+| +-------------------------- RabbitMQ --------------------------+                 |
+| |             Exchange: 'contratos_exchange'                   |                 |
+| |             |                                                |                 |
+| |             Queue: 'posicao_queue'                           |                 |
+| +--------------------------------------------------------------+                 |
+|               |                                                                  |
+|               | 3. Consome evento                                                |
+|               V                                                                  |
 | [Microserviço de Posição e Risco (.NET Core)] --> [Banco SQL Server (Position)]  |
-|  ^                                                                               |
-|  | 4. GET /api/positions/{ano}/{mes}                                             |
-|  |                                                                               |
+|               ^                                                                  |
+|               | 4. GET /api/positions/{ano}/{mes}                                |
+|               |                                                                  |
 | [Dashboards / Frontend]                                                          |
 +----------------------------------------------------------------------------------+
 ```
@@ -73,3 +73,35 @@ Este repositório contém um sistema de exemplo construído com dois microsservi
     cd PositionRisk
     dotnet run --project src/API/API.csproj
     ```
+
+## Documentação das APIs
+
+Ambos os serviços expõem uma documentação interativa via Swagger (OpenAPI), que permite visualizar e testar os endpoints diretamente pelo navegador.
+
+- **Contracts Service Swagger UI:** `https://localhost:5000/swagger` (Ex: `https://localhost:7001/swagger`)
+- **Position & Risk Service Swagger UI:** `https://localhost:5010/swagger` (Ex: `https://localhost:7002/swagger`)
+
+*(Observação: A porta de cada serviço é definida no arquivo `launchSettings.json` de cada projeto API).*
+
+### 1. Contracts Service (Serviço de Contratos)
+
+URL Base: `/api/contracts`
+
+---
+
+#### `POST /api/contracts`
+
+Cria um novo contrato de energia. Após a criação, publica um evento na fila `posicao_queue` para ser consumido pelo serviço de Posição e Risco.
+
+**Request Body:**
+
+```json
+{
+  "counterparty": "Nome da Contraparte",
+  "type": "Purchase",
+  "volumeMwm": 50.5,
+  "price": 250.75,
+  "startDate": "2026-01-01T00:00:00Z",
+  "endDate": "2026-12-31T23:59:59Z"
+}
+```
