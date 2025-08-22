@@ -1,5 +1,12 @@
 # Microsserviços com .NET e RabbitMQ
 
+![.NET](https://img.shields.io/badge/.NET-9-blueviolet)
+![SQL Server](https://img.shields.io/badge/SQL Server-2019-blue)
+![RabbitMQ 3](https://img.shields.io/badge/RabbitMQ-3-orange)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue)
+![Arquitetura](https://img.shields.io/badge/Arquitetura-Clean-green)
+![Visual Studio Code](https://custom-icon-badges.demolab.com/badge/Visual%20Studio%20Code-0078d7.svg?logo=vsc&logoColor=white)
+
 Este repositório contém um sistema de exemplo construído com dois microsserviços que se comunicam de forma assíncrona utilizando .NET e RabbitMQ.
 
 ## Arquitetura
@@ -9,18 +16,49 @@ Este repositório contém um sistema de exemplo construído com dois microsservi
 
 ## Tecnologias Utilizadas
 
-- .NET 9
-- ASP.NET Core Web API
-- Entity Framework Core
-- SQL Server
-- RabbitMQ
-- Docker (para a infraestrutura)
+- Backend: .NET 9, ASP.NET Core 9
+- Persistência de Dados: Entity Framework Core 9
+- Banco de Dados: SQL Server 2019
+- Mensageria: RabbitMQ 3
+- Arquitetura: Clean Architecture
+- Conteinerização: Docker
+- Versionamento de Código: Git e GitHub
+- Teste da API: Rest Client for Visual Studio Code
+
+## Diagrama Simplificado da Arquitetura
+
+```
+                              [API Gateway]
+                                    |
++----------------------------------------------------------------------------------+
+|                                                                                  |
+|  1. POST /api/contracts                                                          |
+|  V                                                                               |
+| [Microserviço de Contratos (.NET Core)] ---> [Banco SQL Server (Contracts)]      |
+|  |                                                                               |
+|  | 2. Publica evento "ContratoCriado"                                            |
+|  V                                                                               |
+| [-------------------------- RabbitMQ --------------------------]                 |
+| |              Exchange: 'contratos_exchange'                  |                 |
+| |                         |                                    |                 |
+| |              Queue: 'posicao_queue'                          |                 |
+| [--------------------------------------------------------------]                 |
+|                                |                                                 |
+|                                | 3. Consome evento                               |
+|                                V                                                 |
+| [Microserviço de Posição e Risco (.NET Core)] --> [Banco SQL Server (Position)]  |
+|  ^                                                                               |
+|  | 4. GET /api/positions/{ano}/{mes}                                             |
+|  |                                                                               |
+| [Dashboards / Frontend]                                                          |
++----------------------------------------------------------------------------------+
+```
 
 ## Como Executar
 
 1.  **Infraestrutura:** Suba os contêineres do SQL Server e RabbitMQ com o Docker Compose:
     ```bash
-    # (Dentro da pasta Thunders.Contracts)
+    # (Dentro da pasta Contracts)
     docker-compose up -d
     ```
 
