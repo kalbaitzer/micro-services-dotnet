@@ -140,7 +140,8 @@ Path Parameters:
 Success Response:
 
     Código: 200 OK
-    Corpo: Retorna um objeto com os dados da posição mensal. Se nenhum contrato foi processado para o período, os valores de volume serão zero.
+    Corpo: Retorna um objeto com os dados da posição mensal. 
+    Se nenhum contrato foi processado para o período, os valores de volume serão zero.
 
 ```json
 {
