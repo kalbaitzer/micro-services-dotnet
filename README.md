@@ -1,7 +1,7 @@
 # Microsserviços com .NET e RabbitMQ
 
 ![.NET](https://img.shields.io/badge/.NET-9-blueviolet)
-![SQL Server](https://img.shields.io/badge/SQL-Server-2019-blue)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-2019-blue)
 ![RabbitMQ 3](https://img.shields.io/badge/RabbitMQ-3-orange)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue)
 ![Arquitetura](https://img.shields.io/badge/Arquitetura-Clean-green)
@@ -98,7 +98,7 @@ Cria um novo contrato de energia. Após a criação, publica um evento na fila `
 ```json
 {
   "counterparty": "Nome da Contraparte",
-  "type": "Purchase",
+  "type": "Compra",
   "volumeMwm": 50.5,
   "price": 250.75,
   "startDate": "2026-01-01T00:00:00Z",
