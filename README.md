@@ -34,7 +34,7 @@ Este repositório contém um sistema de exemplo construído com dois microsservi
 |                                                                                  |
 |               1. POST /api/contracts                                             |
 |               V                                                                  |
-| [Microserviço de Contratos (.NET Core)] ---> [Banco SQL Server (Contracts)]      |
+| [Microsserviço de Contratos (.NET Core)] ---> [Banco SQL Server (Contracts)]     |
 |               |                                                                  |
 |               | 2. Publica evento "ContratoCriado"                               |
 |               V                                                                  |
@@ -46,7 +46,7 @@ Este repositório contém um sistema de exemplo construído com dois microsservi
 |               |                                                                  |
 |               | 3. Consome evento                                                |
 |               V                                                                  |
-| [Microserviço de Posição e Risco (.NET Core)] --> [Banco SQL Server (Position)]  |
+| [Microsserviço de Posição e Risco (.NET Core)] --> [Banco SQL Server (Position)] |
 |               ^                                                                  |
 |               | 4. GET /api/positions/{ano}/{mes}                                |
 |               |                                                                  |
