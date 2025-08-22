@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver-contracts
+    environment:
+      SA_PASSWORD: "Sql@Pass&2025" # Use a mesma senha do appsettings.json
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-contracts
+    ports:
+      - "5672:5672"   # Porta para comunicação
+      - "15672:15672" # Porta para a UI de gerenciamento
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"

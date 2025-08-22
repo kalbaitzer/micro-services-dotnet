@@ -1,0 +1,35 @@
+##################################################################################
+### Requisições para API de Contratos
+##################################################################################
+
+### CreateContract
+POST http://localhost:5000/api/contracts
+Content-Type: application/json
+
+{
+  "counterparty": "C00521",
+  "type": "Compra",
+  "VolumeMwm": 25,
+  "price": 120.75,
+  "startDate": "2026-01-01T00:00:00Z",
+  "endDate": "2030-08-31T23:59:59Z"
+}
+
+### CreateContract
+POST http://localhost:5000/api/contracts
+Content-Type: application/json
+
+{
+  "counterparty": "V00123",
+  "type": "Venda",
+  "VolumeMwm": 52,
+  "price": 530.75,
+  "startDate": "2026-01-01T00:00:00Z",
+  "endDate": "2030-08-31T23:59:59Z"
+}
+
+### GetContracts
+GET http://localhost:5000/api/contracts
+
+### GetContractById
+GET http://localhost:5000/api/contracts/e6e35d8a-ad79-4ccb-abd9-18494b315a5b
