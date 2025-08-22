@@ -105,3 +105,50 @@ Cria um novo contrato de energia. Após a criação, publica um evento na fila `
   "endDate": "2026-12-31T23:59:59Z"
 }
 ```
+
+#### `GET /api/contracts/{id}`
+
+Busca um contrato específico pelo seu ID.
+
+Path Parameters:
+
+    id (guid): O identificador único do contrato.
+
+Success Response:
+
+    Código: 200 OK
+    Corpo: Retorna o objeto completo do contrato encontrado.
+
+Error Response:
+
+    Código: 404 Not Found
+    Causa: Ocorre se nenhum contrato com o id fornecido for encontrado.
+
+### 2. Position & Risk Service (Serviço de Posição e Risco)
+
+URL Base: `/api/positions`
+
+`GET /api/positions/{year}/{month}`
+
+Consulta a posição consolidada de energia para um determinado mês e ano. Os dados são calculados com base nos eventos de contratos consumidos da fila.
+
+Path Parameters:
+
+    year (integer): O ano da posição desejada (ex: 2026).
+    month (integer): O mês da posição desejada (ex: 1 para Janeiro).
+
+Success Response:
+
+    Código: 200 OK
+    Corpo: Retorna um objeto com os dados da posição mensal. Se nenhum contrato foi processado para o período, os valores de volume serão zero.
+
+```json
+{
+  "id": "f9e8d7c6-b5a4-4c3d-2e1f-0a9b8c7d6e5f",
+  "year": 2026,
+  "month": 1,
+  "totalVolumePurchased": 50.5,
+  "totalVolumeSold": 0,
+  "netPosition": 50.5
+}
+```
